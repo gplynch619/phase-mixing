@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
@@ -16,15 +17,24 @@ def hoscillator(gc, t, mass, omega):
     derivative = [omega*p, -omega*q]
     return derivative
 
-gc0 = [0, 0]
+gcq0 = input("What is the intiial 'q' coordinate?")
+gcp0 = input("What is the intiial 'p' coordinate?")
+
+gc0=[gcq0, gcp0]
 
 t = np.linspace(0, 10, 101)
 
 sol = odeint(hoscillator, gc0, t, args=(m, w))
 
-plt.plot(sol[:,0], sol[:,1])
+fig, ax= plt.subplots()
 
-plt.legend(loc='best')
-plt.xlabel('q')
-plt.ylabel('p')
+ax.plot(sol[:,0], sol[:,1])
+
+ax.grid(True)
+ax.set_xlabel('q')
+ax.set_ylabel('p')
+
+ax.axhline(y=0, color='k')
+ax.axvline(x=0, color='k')
+
 plt.show()
